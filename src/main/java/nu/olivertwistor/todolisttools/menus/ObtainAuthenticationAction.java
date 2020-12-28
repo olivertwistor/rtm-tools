@@ -1,9 +1,9 @@
 package nu.olivertwistor.todolisttools.menus;
 
 import nu.olivertwistor.java.tui.Terminal;
-import nu.olivertwistor.todolisttools.util.Session;
 import nu.olivertwistor.todolisttools.rtmapi.auth.CheckToken;
-import nu.olivertwistor.todolisttools.util.Config;
+import nu.olivertwistor.todolisttools.util.AppConfig;
+import nu.olivertwistor.todolisttools.util.Session;
 import org.dom4j.DocumentException;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ public final class ObtainAuthenticationAction implements MenuAction
     private static final String VAL_WRITE_PERMISSIONS = "write";
 
     @Override
-    public boolean execute(final Config config, final Session session)
+    public boolean execute(final AppConfig config, final Session session)
     {
         try
         {
@@ -111,7 +111,7 @@ public final class ObtainAuthenticationAction implements MenuAction
      * @since 0.1.0
      */
     @SuppressWarnings({"JavaDoc", "MethodWithTooExceptionsDeclared"})
-    private static boolean checkExistingToken(final Config config)
+    private static boolean checkExistingToken(final AppConfig config)
             throws DocumentException, NoSuchAlgorithmException,
             MalformedURLException, IOException
     {

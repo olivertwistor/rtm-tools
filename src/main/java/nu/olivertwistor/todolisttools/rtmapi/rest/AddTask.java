@@ -2,8 +2,8 @@ package nu.olivertwistor.todolisttools.rtmapi.rest;
 
 import nu.olivertwistor.todolisttools.rtmapi.Request;
 import nu.olivertwistor.todolisttools.rtmapi.Response;
+import nu.olivertwistor.todolisttools.util.AppConfig;
 import nu.olivertwistor.todolisttools.util.Session;
-import nu.olivertwistor.todolisttools.util.Config;
 import org.dom4j.DocumentException;
 import org.jetbrains.annotations.NonNls;
 
@@ -45,7 +45,7 @@ public final class AddTask
      * @since 0.1.0
      */
     @SuppressWarnings("JavaDoc")
-    public AddTask(final Config config,
+    public AddTask(final AppConfig config,
                    final Session session,
                    final String smartAdd)
             throws DocumentException, NoSuchAlgorithmException, IOException,

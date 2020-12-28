@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * Configuration values from config files are read via this class.
@@ -16,20 +17,8 @@ import java.net.URL;
  * @since  0.1.0
  */
 @SuppressWarnings({"ClassWithoutLogger", "PublicMethodWithoutLogging"})
-public final class Config
+public class Config
 {
-    @NonNls
-    private static final String GROUP_API = "api";
-
-    @NonNls
-    private static final String PROP_KEY = "key";
-
-    @NonNls
-    private static final String PROP_SHARED_SECRET = "shared-secret";
-
-    @NonNls
-    private static final String PROP_AUTH_TOKEN = "auth-token";
-
     private final File file;
     private final Ini ini;
 
@@ -55,56 +44,16 @@ public final class Config
         this.ini = new Ini(url);
     }
 
-    /**
-     * Gets the API key from the config file.
-     *
-     * @return The API key; or null if the config file key couldn't be found.
-     *
-     * @since 0.1.0
-     */
-    public String getApiKey()
+    public String get(final String section, final String option)
     {
-        return this.ini.get(Config.GROUP_API, Config.PROP_KEY);
+        return this.ini.get(section, option);
     }
 
-    /**
-     * Gets the shared secret from the config file.
-     *
-     * @return The shared secret; or null if the config file key couldn't be
-     *         found.
-     *
-     * @since 0.1.0
-     */
-    public String getSharedSecret()
+    public void set(final String section,
+                    final String option,
+                    final Object value) throws IOException
     {
-        return this.ini.get(Config.GROUP_API, Config.PROP_SHARED_SECRET);
-    }
-
-    /**
-     * Gets the authentication token from the config file.
-     *
-     * @return The authentication token; or null if the config file key
-     *         couldn't be found.
-     *
-     * @since 0.1.0
-     */
-    public String getToken()
-    {
-        return this.ini.get(Config.GROUP_API, Config.PROP_AUTH_TOKEN);
-    }
-
-    /**
-     * Sets the authentication token and writes it to the config file.
-     *
-     * @param token the authentication token
-     *
-     * @throws IOException if the config file couldn't be written to
-     *
-     * @since 0.1.0
-     */
-    public void setToken(final String token) throws IOException
-    {
-        this.ini.put(Config.GROUP_API, Config.PROP_AUTH_TOKEN, token);
+        this.ini.put(section, option, value);
         this.ini.store(this.file);
     }
 

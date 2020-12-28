@@ -2,7 +2,7 @@ package nu.olivertwistor.todolisttools.rtmapi.auth;
 
 import nu.olivertwistor.todolisttools.rtmapi.Request;
 import nu.olivertwistor.todolisttools.rtmapi.rest.RestRequest;
-import nu.olivertwistor.todolisttools.util.Config;
+import nu.olivertwistor.todolisttools.util.AppConfig;
 import org.dom4j.DocumentException;
 import org.jetbrains.annotations.NonNls;
 
@@ -36,7 +36,7 @@ public final class CheckToken
      * @since 0.1.0
      */
     @SuppressWarnings("JavaDoc")
-    public CheckToken(final Config config, final String token)
+    public CheckToken(final AppConfig config, final String token)
             throws DocumentException, NoSuchAlgorithmException,
             MalformedURLException, IOException
     {

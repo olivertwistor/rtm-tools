@@ -1,7 +1,7 @@
 package nu.olivertwistor.todolisttools.rtmapi;
 
 import ch.rfin.util.Pair;
-import nu.olivertwistor.todolisttools.util.Config;
+import nu.olivertwistor.todolisttools.util.AppConfig;
 import org.jetbrains.annotations.NonNls;
 
 import javax.xml.bind.DatatypeConverter;
@@ -69,7 +69,7 @@ public abstract class Request
      *
      * @since 0.1.0
      */
-    private final Config config;
+    private final AppConfig config;
 
     /**
      * List of URL parameters in key/value pairs.
@@ -86,7 +86,7 @@ public abstract class Request
      *
      * @since 0.1.0
      */
-    protected Request(final Config config,
+    protected Request(final AppConfig config,
                       final List<Pair<String, String>> parameters)
     {
         this.config = config;
@@ -100,7 +100,7 @@ public abstract class Request
      *
      * @since 0.1.0
      */
-    protected Request(final Config config)
+    protected Request(final AppConfig config)
     {
         this(config, new LinkedList<>());
     }

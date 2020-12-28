@@ -1,5 +1,6 @@
 package nu.olivertwistor.todolisttools.menus;
 
+import nu.olivertwistor.todolisttools.util.AppConfig;
 import nu.olivertwistor.todolisttools.util.Session;
 import nu.olivertwistor.todolisttools.util.Config;
 
@@ -15,7 +16,7 @@ interface MenuAction
     /**
      * Executes the action.
      *
-     * @param config  Config object to use throughout this app
+     * @param config  AppConfig object to use throughout this app
      * @param session Session containing the timeline for this app run
      *
      * @return Whether this action should lead to the current menu (level)
@@ -24,5 +25,5 @@ interface MenuAction
      *
      * @since 0.1.0
      */
-    boolean execute(Config config, Session session);
+    boolean execute(AppConfig config, Session session);
 }

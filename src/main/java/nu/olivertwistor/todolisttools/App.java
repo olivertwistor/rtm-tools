@@ -1,13 +1,12 @@
 package nu.olivertwistor.todolisttools;
 
 import nu.olivertwistor.todolisttools.menus.MainMenu;
-import nu.olivertwistor.todolisttools.util.Config;
+import nu.olivertwistor.todolisttools.util.AppConfig;
 import nu.olivertwistor.todolisttools.util.Session;
 import org.ini4j.InvalidFileFormatException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 /**
  * Main class for this app. Contains the main method.
@@ -19,9 +18,7 @@ import java.net.URL;
 final class App
 {
     /**
-     * Prints a short privacy policy and then creates the main menu. Loops
-     * indefinitely. Thereby, it's very important that at least one of the main
-     * menu items calls {@link System#exit(int)}.
+     * Prints a short privacy policy and then creates the main menu.
      *
      * @param args unused
      *
@@ -31,12 +28,11 @@ final class App
     {
         // We must first see whether we can load the config. Also, start a new
         // session for this run of the application.
-        Config config = null;
+        AppConfig config = null;
         Session session = null;
         try
         {
-            final URL configPath = App.class.getResource("/app.cfg");
-            config = new Config(configPath);
+            config = new AppConfig();
             session = new Session(config);
         }
         catch (final InvalidFileFormatException e)

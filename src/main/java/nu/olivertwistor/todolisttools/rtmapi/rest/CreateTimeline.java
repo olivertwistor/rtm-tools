@@ -2,7 +2,7 @@ package nu.olivertwistor.todolisttools.rtmapi.rest;
 
 import nu.olivertwistor.todolisttools.rtmapi.Request;
 import nu.olivertwistor.todolisttools.rtmapi.Response;
-import nu.olivertwistor.todolisttools.util.Config;
+import nu.olivertwistor.todolisttools.util.AppConfig;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.jetbrains.annotations.NonNls;
@@ -40,7 +40,7 @@ public final class CreateTimeline
      * @since 0.1.0
      */
     @SuppressWarnings("JavaDoc")
-    public CreateTimeline(final Config config)
+    public CreateTimeline(final AppConfig config)
             throws DocumentException, NoSuchAlgorithmException, IOException,
             MalformedURLException
     {

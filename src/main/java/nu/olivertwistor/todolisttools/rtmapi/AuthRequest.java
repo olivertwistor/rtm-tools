@@ -1,7 +1,7 @@
 package nu.olivertwistor.todolisttools.rtmapi;
 
 import ch.rfin.util.Pair;
-import nu.olivertwistor.todolisttools.util.Config;
+import nu.olivertwistor.todolisttools.util.AppConfig;
 import org.apache.http.client.utils.URIBuilder;
 import org.jetbrains.annotations.NonNls;
 
@@ -36,7 +36,7 @@ public final class AuthRequest extends Request
      *
      * @since 0.1.0
      */
-    private AuthRequest(final Config config,
+    private AuthRequest(final AppConfig config,
                         final String permissions,
                         final String frob,
                         final List<Pair<String, String>> parameters)
@@ -59,7 +59,7 @@ public final class AuthRequest extends Request
      *
      * @since 0.1.0
      */
-    public AuthRequest(final Config config,
+    public AuthRequest(final AppConfig config,
                        final String permissions,
                        final String frob)
     {

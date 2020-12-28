@@ -2,7 +2,7 @@ package nu.olivertwistor.todolisttools.rtmapi.auth;
 
 import nu.olivertwistor.todolisttools.rtmapi.Request;
 import nu.olivertwistor.todolisttools.rtmapi.rest.RestRequest;
-import nu.olivertwistor.todolisttools.util.Config;
+import nu.olivertwistor.todolisttools.util.AppConfig;
 import org.dom4j.DocumentException;
 import org.jetbrains.annotations.NonNls;
 
@@ -37,7 +37,7 @@ public final class GetToken
      * @throws MalformedURLException
      */
     @SuppressWarnings("JavaDoc")
-    public GetToken(final Config config, final String frob)
+    public GetToken(final AppConfig config, final String frob)
             throws DocumentException, NoSuchAlgorithmException, IOException,
             MalformedURLException
     {

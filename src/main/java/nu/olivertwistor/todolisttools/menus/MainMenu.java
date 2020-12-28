@@ -2,8 +2,8 @@ package nu.olivertwistor.todolisttools.menus;
 
 import ch.rfin.util.Pair;
 import nu.olivertwistor.java.tui.UnclosableInputStream;
+import nu.olivertwistor.todolisttools.util.AppConfig;
 import nu.olivertwistor.todolisttools.util.Session;
-import nu.olivertwistor.todolisttools.util.Config;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import java.util.TreeMap;
 @SuppressWarnings({"HardCodedStringLiteral", "PublicMethodWithoutLogging", "StringConcatenation", "ClassWithoutLogger"})
 public final class MainMenu
 {
-    private final Config config;
+    private final AppConfig config;
     private final Session session;
     private final SortedMap<String, Pair<String, MenuAction>> menuItems;
 
@@ -43,7 +43,7 @@ public final class MainMenu
      *
      * @since 0.1.0
      */
-    public MainMenu(final Config config, final Session session)
+    public MainMenu(final AppConfig config, final Session session)
     {
         this.config = config;
         this.session = session;

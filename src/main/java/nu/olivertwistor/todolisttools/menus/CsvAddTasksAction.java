@@ -1,11 +1,12 @@
 package nu.olivertwistor.todolisttools.menus;
 
 import nu.olivertwistor.java.tui.Terminal;
-import nu.olivertwistor.todolisttools.rtmapi.rest.CreateTimeline;
-import nu.olivertwistor.todolisttools.util.Session;
 import nu.olivertwistor.todolisttools.models.Task;
 import nu.olivertwistor.todolisttools.rtmapi.rest.AddTask;
-import nu.olivertwistor.todolisttools.util.Config;
+import nu.olivertwistor.todolisttools.rtmapi.rest.CreateTimeline;
+import nu.olivertwistor.todolisttools.util.AppConfig;
+import nu.olivertwistor.todolisttools.util.CsvConfig;
+import nu.olivertwistor.todolisttools.util.Session;
 import org.dom4j.DocumentException;
 
 import java.io.BufferedReader;
@@ -37,7 +38,7 @@ public final class CsvAddTasksAction implements MenuAction
     private static final int SECONDS_PER_REQUEST = 1_500;
 
     @Override
-    public boolean execute(final Config config, final Session session)
+    public boolean execute(final AppConfig config, final Session session)
     {
         try
         {
@@ -191,7 +192,7 @@ public final class CsvAddTasksAction implements MenuAction
      * @since 0.1.0
      */
     @SuppressWarnings({"JavaDoc", "MethodWithTooExceptionsDeclared"})
-    private static void createTimeline(final Config config,
+    private static void createTimeline(final AppConfig config,
                                        final Session session)
             throws DocumentException, NoSuchAlgorithmException,
             MalformedURLException, IOException

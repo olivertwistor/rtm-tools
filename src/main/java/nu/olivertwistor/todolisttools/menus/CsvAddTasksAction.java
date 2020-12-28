@@ -121,8 +121,7 @@ public final class CsvAddTasksAction implements MenuAction
     /**
      * Parses a CSV file into a list of Task objects.
      *
-     * @param file      the file to parse
-     * @param delimiter the delimiting character between columns in the file
+     * @param file the file to parse
      *
      * @return A list of Task objects.
      *
@@ -130,7 +129,7 @@ public final class CsvAddTasksAction implements MenuAction
      *
      * @since 0.1.0
      */
-    static List<Task> parseCsvFile(final File file, final String delimiter)
+    static List<Task> parseCsvFile(final File file, final CsvConfig config)
             throws IOException
     {
         // Read the file line by line and split each line into columns.
@@ -138,13 +137,18 @@ public final class CsvAddTasksAction implements MenuAction
         try (final BufferedReader br = Files.newBufferedReader(
                 filePath, StandardCharsets.UTF_8))
         {
-            // Skip the first line.
-            final String skippedLine = br.readLine();
+            // Skip first few lines if the config says so.
+            final int linesToSkip = config.getSkipLines();
+            final int nSkippedLines =
+                    CsvAddTasksAction.skipFirstLines(linesToSkip, br);
+
             int nReadLines = 0;
             final List<Task> tasks = new ArrayList<>();
-            if (skippedLine != null)
+            if (nSkippedLines == linesToSkip)
             {
-                System.out.println("Skipped line: " + skippedLine);
+                System.out.println("Skipped lines: " + nSkippedLines);
+
+                final String delimiter = config.getDelimiter();
 
                 for (String line = br.readLine(); line != null;
                      line = br.readLine())
@@ -160,6 +164,21 @@ public final class CsvAddTasksAction implements MenuAction
             System.out.println("Read " + nReadLines + " lines.");
             return tasks;
         }
+    }
+
+    private static int skipFirstLines(final int nLines,
+                                      final BufferedReader br)
+            throws IOException
+    {
+        int nSkipped = 0;
+
+        for (int line = 0; line < nLines; line++)
+        {
+            br.readLine();
+            nSkipped++;
+        }
+
+        return nSkipped;
     }
 
     /**

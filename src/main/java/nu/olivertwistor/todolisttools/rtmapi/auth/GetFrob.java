@@ -71,6 +71,7 @@ public final class GetFrob
         return frobElement.getText();
     }
 
+    @SuppressWarnings("DuplicateStringLiteralInspection")
     @Override
     public @NonNls String toString()
     {

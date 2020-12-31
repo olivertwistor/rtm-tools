@@ -75,7 +75,7 @@ public final class ObtainAuthenticationAction implements MenuAction
         }
         catch (final IOException e)
         {
-            System.err.println("Failed to read user input.");
+            System.err.println("Failed to read input.");
             return false;
         }
 

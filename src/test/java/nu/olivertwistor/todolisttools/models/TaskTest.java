@@ -1,5 +1,6 @@
 package nu.olivertwistor.todolisttools.models;
 
+import nu.olivertwistor.todolisttools.util.CsvConfig;
 import org.hamcrest.CoreMatchers;
 import org.jetbrains.annotations.NonNls;
 import org.junit.Assert;
@@ -23,10 +24,6 @@ public final class TaskTest
     @Test
     public void When_SmartAddTasksUsingAllSetters_Then_CorrectStringIsReturned()
     {
-        // We need to create two targets, each with a permutation of the tags
-        // because the SmartAddBuilder uses a Set for tags, and Sets are
-        // unordered.
-
         final Task task = new Task("Buy milk");
         task.setUrl("https://grocerystore.com");
         task.setStart("Tomorrow");
@@ -39,6 +36,10 @@ public final class TaskTest
         task.addTag("money");
         task.setTimeEstimate("30 minutes");
         task.setComments("Pick low fat if available.");
+
+        // We need to create two targets, each with a permutation of the tags
+        // because the SmartAddBuilder uses a Set for tags, and Sets are
+        // unordered.
 
         final String[] targets = {
                 "Buy milk https://grocerystore.com ~Tomorrow ^Saturday " +

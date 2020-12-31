@@ -60,6 +60,7 @@ public final class GetToken
         return this.response;
     }
 
+    @SuppressWarnings("DuplicateStringLiteralInspection")
     @Override
     public @NonNls String toString()
     {

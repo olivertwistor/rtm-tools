@@ -1,6 +1,7 @@
 package nu.olivertwistor.todolisttools.models;
 
 import ch.rfin.util.Pair;
+import nu.olivertwistor.todolisttools.util.CsvConfig;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.HashSet;
@@ -45,6 +46,103 @@ public final class Task
     public Task(final String name)
     {
         this.name = Pair.of(SmartAddPrefixes.NAME.getPrefix(), name);
+    }
+
+    /**
+     * Creates a new Task object based on a string array with data and a
+     * configuration object, detailing which array elements that correspond
+     * with which Task properties.
+     *
+     * @param data   string array of data to fill into the Task properties
+     * @param config configuration object detailing which array elements that
+     *               correspond to which Task properties
+     *
+     * @throws IndexOutOfBoundsException if the configuration object points to
+     *                                   any array element that doesn't exist
+     *                                   in the data string array
+     *
+     * @since 0.1.0
+     */
+    @SuppressWarnings({"OverlyComplexMethod", "OverlyLongMethod"})
+    public Task(final String[] data, final CsvConfig config)
+    {
+        final int columnIndexName = config.getColumnIndexName();
+        this.name = Pair.of(SmartAddPrefixes.NAME.getPrefix(),
+                data[columnIndexName]);
+
+        final int columnIndexUrl = config.getColumnIndexUrl();
+        if (columnIndexUrl > 0)
+        {
+            final String urlData = data[columnIndexUrl];
+            this.url = Pair.of(SmartAddPrefixes.URL.getPrefix(), urlData);
+        }
+
+        final int columnIndexStart = config.getColumnIndexStart();
+        if (columnIndexStart > 0)
+        {
+            final String startData = data[columnIndexStart];
+            this.start = Pair.of(SmartAddPrefixes.START.getPrefix(), startData);
+        }
+
+        final int columnIndexDue = config.getColumnIndexDue();
+        if (columnIndexDue > 0)
+        {
+            this.due = Pair.of(SmartAddPrefixes.DUE.getPrefix(),
+                    data[columnIndexDue]);
+        }
+
+        final int columnIndexRepeat = config.getColumnIndexRepeat();
+        if (columnIndexRepeat > 0)
+        {
+            this.repeat = Pair.of(SmartAddPrefixes.REPEAT.getPrefix(),
+                    data[columnIndexRepeat]);
+        }
+
+        final int columnIndexLocation = config.getColumnIndexLocation();
+        if (columnIndexLocation > 0)
+        {
+            this.location = Pair.of(SmartAddPrefixes.LOCATION.getPrefix(),
+                    data[columnIndexLocation]);
+        }
+
+        final int columnIndexPriority = config.getColumnIndexPriority();
+        if (columnIndexPriority > 0)
+        {
+            this.priority = Pair.of(SmartAddPrefixes.PRIORITY.getPrefix(),
+                    data[columnIndexPriority]);
+        }
+
+        final int columnIndexList = config.getColumnIndexList();
+        if (columnIndexList > 0)
+        {
+            this.list = Pair.of(SmartAddPrefixes.LIST.getPrefix(),
+                    data[columnIndexList]);
+        }
+
+        final int columnIndexTags = config.getColumnIndexTags();
+        if (columnIndexTags > 0)
+        {
+            final String[] tags = data[columnIndexTags].split(",", -1);
+            for (final String tag : tags)
+            {
+                this.tags.add(Pair.of(SmartAddPrefixes.TAG.getPrefix(), tag));
+            }
+        }
+
+        final int columnIndexTimeEstimate = config.getColumnIndexTimeEstimate();
+        if (columnIndexTimeEstimate > 0)
+        {
+            this.timeEstimate = Pair.of(
+                    SmartAddPrefixes.TIME_ESTIMATE.getPrefix(),
+                    data[columnIndexTimeEstimate]);
+        }
+
+        final int columnIndexComments = config.getColumnIndexComments();
+        if (columnIndexComments > 0)
+        {
+            this.comments = Pair.of(SmartAddPrefixes.COMMENTS.getPrefix(),
+                    data[columnIndexComments]);
+        }
     }
 
     void setUrl(final String url)

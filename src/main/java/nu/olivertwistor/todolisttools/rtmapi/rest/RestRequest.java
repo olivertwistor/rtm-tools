@@ -2,7 +2,7 @@ package nu.olivertwistor.todolisttools.rtmapi.rest;
 
 import ch.rfin.util.Pair;
 import nu.olivertwistor.todolisttools.rtmapi.Request;
-import nu.olivertwistor.todolisttools.util.Config;
+import nu.olivertwistor.todolisttools.util.AppConfig;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.net.URI;
@@ -34,7 +34,7 @@ public class RestRequest extends Request
      *
      * @since 0.1.0
      */
-    private RestRequest(final Config config,
+    private RestRequest(final AppConfig config,
                         final String methodName,
                         final List<Pair<String, String>> parameters)
     {
@@ -50,7 +50,7 @@ public class RestRequest extends Request
      *
      * @since 0.1.0
      */
-    public RestRequest(final Config config, final String methodName)
+    public RestRequest(final AppConfig config, final String methodName)
     {
         this(config, methodName, new LinkedList<>());
     }

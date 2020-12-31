@@ -11,7 +11,6 @@ import org.dom4j.DocumentException;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +21,6 @@ import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Adds tasks to Remember The Milk based on a user supplied CSV file.
@@ -37,6 +35,7 @@ public final class CsvAddTasksAction implements MenuAction
 {
     private static final int SECONDS_PER_REQUEST = 1_500;
 
+    @SuppressWarnings("OverlyLongMethod")
     @Override
     public boolean execute(final AppConfig config, final Session session)
     {
@@ -51,10 +50,14 @@ public final class CsvAddTasksAction implements MenuAction
             return false;
         }
 
-        final String[] csvUserInput;
+        final String inputCsvDataFile;
+        final String inputCsvConfigFile;
         try
         {
-            csvUserInput = CsvAddTasksAction.readCsvUserInput();
+            inputCsvDataFile = Terminal.readString(
+                    "Path to CSV file containing tasks: ");
+            inputCsvConfigFile = Terminal.readString(
+                    "Path to CSV configuration file: ");
         }
         catch (final IOException e)
         {
@@ -62,26 +65,29 @@ public final class CsvAddTasksAction implements MenuAction
             return false;
         }
 
-        List<Task> parsedFile = null;
+        List<Task> parsedDataFile = null;
         try
         {
-            final Path filePath = Paths.get(csvUserInput[0]);
-            final File file = filePath.toFile();
+            final Path dataFilePath = Paths.get(inputCsvDataFile);
+            final File dataFile = dataFilePath.toFile();
+            final Path configFilePath = Paths.get(inputCsvConfigFile);
+            final File configFile = configFilePath.toFile();
 
-            parsedFile = CsvAddTasksAction.parseCsvFile(file, csvUserInput[1]);
+            parsedDataFile = CsvAddTasksAction.parseCsvFile(
+                    dataFile, configFile);
         }
         catch (final InvalidPathException | IOException e)
         {
             System.out.println("Failed to parse the CSV file.");
         }
 
-        if (parsedFile == null)
+        if (parsedDataFile == null)
         {
             System.out.println("Failed to parse the CSV file into tasks.");
             return false;
         }
 
-        for (final Task task : parsedFile)
+        for (final Task task : parsedDataFile)
         {
             final String smartAdd = task.toSmartAdd();
             try
@@ -120,23 +126,28 @@ public final class CsvAddTasksAction implements MenuAction
     }
 
     /**
-     * Parses a CSV file into a list of Task objects.
+     * Parses a CSV file into a list of Task objects, using a configuration
+     * detailing how to parse the CSV file.
      *
-     * @param file the file to parse
+     * @param dataFile   the CSV file to parse
+     * @param configFile file containing the configuration for parsing the CSV
+     *                   file
      *
      * @return A list of Task objects.
      *
-     * @throws IOException if the file couldn't be read
+     * @throws IOException if any of the files couldn't be read
      *
      * @since 0.1.0
      */
-    static List<Task> parseCsvFile(final File file, final CsvConfig config)
+    static List<Task> parseCsvFile(final File dataFile, final File configFile)
             throws IOException
     {
+        final CsvConfig config = new CsvConfig(configFile);
+
         // Read the file line by line and split each line into columns.
-        final Path filePath = file.toPath();
+        final Path dataFilePath = dataFile.toPath();
         try (final BufferedReader br = Files.newBufferedReader(
-                filePath, StandardCharsets.UTF_8))
+                dataFilePath, StandardCharsets.UTF_8))
         {
             // Skip first few lines if the config says so.
             final int linesToSkip = config.getSkipLines();
@@ -157,7 +168,7 @@ public final class CsvAddTasksAction implements MenuAction
                     nReadLines++;
 
                     final String[] columns = line.split(delimiter, -1);
-                    final Task task = new Task(columns[0]);
+                    final Task task = new Task(columns, config);
                     tasks.add(task);
                 }
             }
@@ -167,6 +178,19 @@ public final class CsvAddTasksAction implements MenuAction
         }
     }
 
+    /**
+     * Skips over a number of lines in the beginning of the input of a
+     * BufferedReader.
+     *
+     * @param nLines the number of lines to skip over
+     * @param br     BufferedReader to read input from
+     *
+     * @return The number of lines that were skipped over.
+     *
+     * @throws IOException if the BufferedReader couldn't read lines
+     *
+     * @since 0.1.0
+     */
     private static int skipFirstLines(final int nLines,
                                       final BufferedReader br)
             throws IOException
@@ -203,41 +227,5 @@ public final class CsvAddTasksAction implements MenuAction
             final String timeline = createTimeline.getTimeline();
             session.setTimeline(timeline);
         }
-    }
-
-    /**
-     * Asks the user for the path to a CSV file to load, as well as for the
-     * delimiter between columns in that file.
-     *
-     * @return The path to a CSV file and the delimiter between columns,
-     *         together in an array.
-     *
-     * @throws FileNotFoundException if the file couldn't be found
-     * @throws IOException           if user input couldn't be read
-     *
-     * @since 0.1.0
-     */
-    private static String[] readCsvUserInput()
-            throws FileNotFoundException, IOException
-    {
-        System.out.println(String.join(System.lineSeparator(),
-                "Here, you can specify a CSV file containing tasks to add to ",
-                "Remember The Milk. Please note that the first row is ",
-                "considered headings, and the only task property currently ",
-                "implemented is name and it must be in the first column. All ",
-                "other columns are ignored. The tasks will be added to ",
-                "Inbox, and have the default due date and neither tags nor ",
-                "time estimates."));
-        System.out.println();
-
-        final String csvFileInput = Terminal.readString(
-                "Path to the CSV file to load: ");
-        final String csvDelimiter = Terminal.readString(
-                "By which character is the columns separated? ");
-
-        Objects.requireNonNull(csvFileInput,
-                () -> "Failed to find file: " + csvFileInput);
-
-        return new String[] { csvFileInput, csvDelimiter };
     }
 }

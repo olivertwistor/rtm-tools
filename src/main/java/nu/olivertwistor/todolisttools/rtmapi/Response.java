@@ -36,6 +36,8 @@ public class Response
 
     @NonNls
     private static final String VAL_STATUS_SUCCESS = "ok";
+    private static final String FAILED_TO_FIND_STATUS_ATTRIB_ON_ROOT_ELEMENT =
+            "Failed to find a status attribute on the root element.";
 
     /**
      * The root element of the XML response.
@@ -121,7 +123,7 @@ public class Response
         final String status = this.rootElement.attributeValue(
                 Response.ATTRIB_STATUS);
         Objects.requireNonNull(status,
-                "Failed to find a status attribute on the root element.");
+                Response.FAILED_TO_FIND_STATUS_ATTRIB_ON_ROOT_ELEMENT);
 
         return Response.VAL_STATUS_SUCCESS.equals(status);
     }
@@ -141,7 +143,7 @@ public class Response
         final String status = this.rootElement.attributeValue(
                 Response.ATTRIB_STATUS);
         Objects.requireNonNull(status,
-                "Failed to find a status attribute on the root element.");
+                Response.FAILED_TO_FIND_STATUS_ATTRIB_ON_ROOT_ELEMENT);
 
         return Response.VAL_STATUS_FAILURE.equals(status);
     }
@@ -164,7 +166,7 @@ public class Response
      *
      * @since 0.1.0
      */
-    @SuppressWarnings("IfCanBeAssertion")
+    @SuppressWarnings({"IfCanBeAssertion", "DuplicateStringLiteralInspection"})
     private Element getElement(final Element base, final Deque<String> tags)
     {
         if ((base == null) || tags.isEmpty())
@@ -272,6 +274,7 @@ public class Response
      *
      * @since 0.1.0
      */
+    @SuppressWarnings("DuplicateStringLiteralInspection")
     public final Element getElement(final String tag)
     {
         final Element element = this.rootElement.element(tag);

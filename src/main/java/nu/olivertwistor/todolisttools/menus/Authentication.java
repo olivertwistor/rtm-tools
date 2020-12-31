@@ -3,7 +3,7 @@ package nu.olivertwistor.todolisttools.menus;
 import nu.olivertwistor.todolisttools.rtmapi.AuthRequest;
 import nu.olivertwistor.todolisttools.rtmapi.auth.GetFrob;
 import nu.olivertwistor.todolisttools.rtmapi.auth.GetToken;
-import nu.olivertwistor.todolisttools.util.Config;
+import nu.olivertwistor.todolisttools.util.AppConfig;
 import org.dom4j.DocumentException;
 import org.jetbrains.annotations.NonNls;
 
@@ -17,13 +17,12 @@ import java.util.Objects;
 /**
  * This class handles authentication to the Remember The Milk service. The way
  * to use this class is to first call
- * {@link #generateAuthRequest(Config, String)}. That method returns a URL the
- * user should go to and give this application necessary permissions to access
- * the user's RTM account. When that is done, {@link #obtainToken(Config)} may
- * be called to obtain a token, with which all subsequent API calls to the RTM
- * service will be made.
+ * {@link #generateAuthRequest(AppConfig, String)}. That method returns a URL
+ * the user should go to and give this application necessary permissions to
+ * access the user's RTM account. When that is done,
+ * {@link #obtainToken(AppConfig)} may be called to obtain a token, with which
+ * all subsequent API calls to the RTM service will be made.
  *
- * @author Johan Nilsson
  * @since  0.1.0
  */
 @SuppressWarnings({"ClassWithoutLogger", "PublicMethodWithoutLogging", "ConstantExpression"})
@@ -49,8 +48,8 @@ final class Authentication
      * @throws IOException
      */
     @SuppressWarnings({"JavaDoc", "MethodWithTooExceptionsDeclared"})
-    public URL generateAuthRequest(final Config config,
-                                   final String permission)
+    URL generateAuthRequest(final AppConfig config,
+                            final String permission)
             throws DocumentException, NoSuchAlgorithmException,
             MalformedURLException, IOException
     {
@@ -65,7 +64,7 @@ final class Authentication
     }
 
     /**
-     * If {@link #generateAuthRequest(Config, String)} has been called
+     * If {@link #generateAuthRequest(AppConfig, String)} has been called
      * beforehand, an authentication token is retrieved from Remember the Milk
      * for use with all subsequent calls to the RTM API.
      *
@@ -73,9 +72,9 @@ final class Authentication
      *
      * @return The authentication token.
      *
-     * @throws UnsupportedOperationException if {@link #generateAuthRequest(Config, String)}
-     *                                       hasn't been called prior to
-     *                                       calling this method
+     * @throws UnsupportedOperationException if an auth request hasn't been
+     *                                       generated prior to calling this
+     *                                       method
      * @throws NoSuchElementException
      * @throws DocumentException
      * @throws NoSuchAlgorithmException
@@ -83,7 +82,7 @@ final class Authentication
      * @throws IOException
      */
     @SuppressWarnings({"JavaDoc", "MethodWithTooExceptionsDeclared"})
-    public String obtainToken(final Config config)
+    String obtainToken(final AppConfig config)
             throws DocumentException, NoSuchAlgorithmException,
             MalformedURLException, IOException
     {

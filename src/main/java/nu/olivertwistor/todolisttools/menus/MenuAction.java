@@ -2,7 +2,6 @@ package nu.olivertwistor.todolisttools.menus;
 
 import nu.olivertwistor.todolisttools.util.AppConfig;
 import nu.olivertwistor.todolisttools.util.Session;
-import nu.olivertwistor.todolisttools.util.Config;
 
 /**
  * Classes implementing this interface define some action that can be executed

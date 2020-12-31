@@ -64,6 +64,7 @@ public final class CheckToken
         return this.response;
     }
 
+    @SuppressWarnings("DuplicateStringLiteralInspection")
     @Override
     public @NonNls String toString()
     {

@@ -18,38 +18,20 @@ import java.net.URL;
 @SuppressWarnings({"ClassWithoutLogger", "PublicMethodWithoutLogging"})
 public final class CsvConfig extends Config
 {
-    @NonNls
-    private static final String SECTION_CSV = "csv";
-
-    @NonNls
-    private static final String OPTION_DELIMITER = "delimiter";
-
-    @NonNls
-    private static final String OPTION_SKIP_LINES = "skip-lines";
-
-    /**
-     * Creating a new instance of this object based on a certain URL pointing
-     * to configuration.
-     *
-     * @param url URL pointing to configuration
-     *
-     * @throws InvalidFileFormatException if the configuration isn't formatted
-     *                                    correctly
-     * @throws IOException                if the given URL couldn't be found or
-     *                                    read
-     *
-     * @since 0.1.0
-     */
-    @SuppressWarnings("JavaDoc")
     public CsvConfig(final URL url)
             throws InvalidFileFormatException, IOException, URISyntaxException
     {
-        super(url);
+        super(CsvConfig.class.getResource("/csv.defaults.cfg"));
+    }
+
+    public CsvConfig(final File file) throws IOException
+    {
+        super(file);
     }
 
     public String getDelimiter()
     {
-        return this.get(CsvConfig.SECTION_CSV, CsvConfig.OPTION_DELIMITER);
+        return this.get("csv", "delimiter");
     }
 
     /**
@@ -58,10 +40,143 @@ public final class CsvConfig extends Config
      *
      * @throws NumberFormatException
      */
+    @SuppressWarnings("JavaDoc")
     public int getSkipLines()
     {
-        final String rawString = this.get(
-                CsvConfig.SECTION_CSV, CsvConfig.OPTION_SKIP_LINES);
+        final String rawString = this.get("csv", "skip.lines");
         return Integer.parseInt(rawString);
+    }
+
+    @SuppressWarnings("JavaDoc")
+    public int getColumnIndexName()
+    {
+        final String rawString = this.get("task", "column.index.name");
+        return Integer.parseInt(rawString);
+    }
+
+    public String getDefaultValueName()
+    {
+        return this.get("task", "default.value.name");
+    }
+
+    @SuppressWarnings("JavaDoc")
+    public int getColumnIndexUrl()
+    {
+        final String rawString = this.get("task", "column.index.url");
+        return Integer.parseInt(rawString);
+    }
+
+    public String getDefaultValueUrl()
+    {
+        return this.get("task", "default.value.url");
+    }
+
+    @SuppressWarnings("JavaDoc")
+    public int getColumnIndexStart()
+    {
+        final String rawString = this.get("task", "column.index.start");
+        return Integer.parseInt(rawString);
+    }
+
+    public String getDefaultValueStart()
+    {
+        return this.get("task", "default.value.start");
+    }
+
+    @SuppressWarnings("JavaDoc")
+    public int getColumnIndexDue()
+    {
+        final String rawString = this.get("task", "column.index.due");
+        return Integer.parseInt(rawString);
+    }
+
+    public String getDefaultValueDue()
+    {
+        return this.get("task", "default.value.due");
+    }
+
+    @SuppressWarnings("JavaDoc")
+    public int getColumnIndexRepeat()
+    {
+        final String rawString = this.get("task", "column.index.repeat");
+        return Integer.parseInt(rawString);
+    }
+
+    public String getDefaultValueRepeat()
+    {
+        return this.get("task", "default.value.repeat");
+    }
+
+    @SuppressWarnings("JavaDoc")
+    public int getColumnIndexLocation()
+    {
+        final String rawString = this.get("task", "column.index.location");
+        return Integer.parseInt(rawString);
+    }
+
+    public String getDefaultValueLocation()
+    {
+        return this.get("task", "default.value.location");
+    }
+
+    @SuppressWarnings("JavaDoc")
+    public int getColumnIndexPriority()
+    {
+        final String rawString = this.get("task", "column.index.priority");
+        return Integer.parseInt(rawString);
+    }
+
+    public String getDefaultValuePriority()
+    {
+        return this.get("task", "default.value.priority");
+    }
+
+    @SuppressWarnings("JavaDoc")
+    public int getColumnIndexList()
+    {
+        final String rawString = this.get("task", "column.index.list");
+        return Integer.parseInt(rawString);
+    }
+
+    public String getDefaultValueList()
+    {
+        return this.get("task", "default.value.list");
+    }
+
+    @SuppressWarnings("JavaDoc")
+    public int getColumnIndexTags()
+    {
+        final String rawString = this.get("task", "column.index.tags");
+        return Integer.parseInt(rawString);
+    }
+
+    public String[] getDefaultValueTags()
+    {
+        final String allTags = this.get("task", "default.value.tags");
+        return allTags.split(",", -1);
+    }
+
+    @SuppressWarnings("JavaDoc")
+    public int getColumnIndexTimeEstimate()
+    {
+        final String rawString = this.get("task", "column.index.time.estimate");
+        return Integer.parseInt(rawString);
+    }
+
+    public String getDefaultValueTimeEstimate()
+    {
+        return this.get("task", "default.value.time.estimate");
+    }
+
+    @SuppressWarnings("JavaDoc")
+    public int getColumnIndexComments()
+    {
+        final String rawString = this.get("task", "column.index.comments");
+        return Integer.parseInt(rawString);
+    }
+
+    public String getDefaultValueComments()
+    {
+        return this.get("task", "default.value.comments");
     }
 }

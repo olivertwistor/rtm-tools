@@ -22,6 +22,7 @@ public final class AddTask
     @NonNls
     private static final String METHOD_ADD_TASK = "rtm.tasks.add";
 
+    @SuppressWarnings("DuplicateStringLiteralInspection")
     @NonNls
     private static final String PARAM_TIMELINE = "timeline";
 
@@ -75,6 +76,7 @@ public final class AddTask
         return this.response;
     }
 
+    @SuppressWarnings("DuplicateStringLiteralInspection")
     @Override
     public @NonNls String toString()
     {

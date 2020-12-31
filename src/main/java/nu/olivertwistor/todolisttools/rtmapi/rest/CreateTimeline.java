@@ -25,6 +25,7 @@ public final class CreateTimeline
     @NonNls
     private static final String METHOD_CREATE_TIMELINE = "rtm.timelines.create";
 
+    @SuppressWarnings("DuplicateStringLiteralInspection")
     @NonNls
     private static final String TAG_TIMELINE = "timeline";
 
@@ -83,6 +84,7 @@ public final class CreateTimeline
         return this.response;
     }
 
+    @SuppressWarnings("DuplicateStringLiteralInspection")
     @Override
     public @NonNls String toString()
     {

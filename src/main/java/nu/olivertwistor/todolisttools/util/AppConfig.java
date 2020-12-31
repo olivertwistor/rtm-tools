@@ -1,14 +1,10 @@
 package nu.olivertwistor.todolisttools.util;
 
-import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 import org.jetbrains.annotations.NonNls;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 /**
  * Configuration values from the app config fil are read via this class.
@@ -19,18 +15,21 @@ import java.net.URL;
 public final class AppConfig extends Config
 {
     @NonNls
-    private static final String SECTION_API = "api";
-
+    private static final String API = "api";
+    
     @NonNls
-    private static final String OPTION_KEY = "key";
+    private static final String AUTH_TOKEN = "auth.token";
 
-    @NonNls
-    private static final String OPTION_SHARED_SECRET = "shared-secret";
-
-    @NonNls
-    private static final String OPTION_AUTH_TOKEN = "auth-token";
-
-    public AppConfig() throws IOException, URISyntaxException
+    /**
+     * Creates a new app configuration object based on the resource file
+     * "/app.cfg".
+     *
+     * @throws IOException
+     * @throws URISyntaxException
+     */
+    @SuppressWarnings("JavaDoc")
+    public AppConfig()
+            throws IOException, URISyntaxException, InvalidFileFormatException
     {
         super(AppConfig.class.getResource("/app.cfg"));
     }
@@ -42,9 +41,9 @@ public final class AppConfig extends Config
      *
      * @since 0.1.0
      */
-    public String getApiKey()
+    public @NonNls String getApiKey()
     {
-        return this.get(AppConfig.SECTION_API, AppConfig.OPTION_KEY);
+        return this.get(AppConfig.API, "key");
     }
 
     /**
@@ -55,9 +54,9 @@ public final class AppConfig extends Config
      *
      * @since 0.1.0
      */
-    public String getSharedSecret()
+    public @NonNls String getSharedSecret()
     {
-        return this.get(AppConfig.SECTION_API, AppConfig.OPTION_SHARED_SECRET);
+        return this.get(AppConfig.API, "shared.secret");
     }
 
     /**
@@ -68,9 +67,9 @@ public final class AppConfig extends Config
      *
      * @since 0.1.0
      */
-    public String getToken()
+    public @NonNls String getToken()
     {
-        return this.get(AppConfig.SECTION_API, AppConfig.OPTION_AUTH_TOKEN);
+        return this.get(AppConfig.API, AppConfig.AUTH_TOKEN);
     }
 
     /**
@@ -84,6 +83,6 @@ public final class AppConfig extends Config
      */
     public void setToken(final String token) throws IOException
     {
-        this.set(AppConfig.SECTION_API, AppConfig.OPTION_AUTH_TOKEN, token);
+        this.set(AppConfig.API, AppConfig.AUTH_TOKEN, token);
     }
 }

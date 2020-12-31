@@ -2,6 +2,7 @@ package nu.olivertwistor.todolisttools.util;
 
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
+import org.ini4j.Profile;
 import org.jetbrains.annotations.NonNls;
 
 import java.io.File;
@@ -44,6 +45,32 @@ public class Config
         this.ini = new Ini(url);
     }
 
+    /**
+     * Creating a new instance of this object based on a certain File pointing
+     * to configuration.
+     *
+     * @param file File pointing to configuration
+     *
+     * @throws InvalidFileFormatException if the configuration isn't formatted
+     *                                    correctly
+     * @throws IOException                if the given File couldn't be found
+     *                                    or read
+     *
+     * @since 0.1.0
+     */
+    @SuppressWarnings("JavaDoc")
+    public Config(final File file)
+            throws IOException, InvalidFileFormatException
+    {
+        this.file = file;
+        this.ini = new Ini(file);
+    }
+
+    /**
+     * @param section 
+     * @param option
+     * @return
+     */
     public String get(final String section, final String option)
     {
         return this.ini.get(section, option);
